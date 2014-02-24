@@ -6,6 +6,46 @@ PersistentContentCache
 
 Extends spark.core.ContentCache to add a disk-based cache. Content is attempted to be found in the memory cache first, then the disk cache and finally from the network.
 
+Usage
+=====
+
+Use in place of the standard Spark ContentCache class. Create a static instance and assign to the iconContentLoader property of ItemRenderer.
+
+For example, in a custom class extending ItemRenderer...
+
+```
+public class CustomItemRendererBase extends IconItemRenderer
+{
+
+	/**
+	 * Static thumbnail cache and initializer
+	 */
+	public static var thumbnailCache:PersistentContentCache;
+	{
+		thumbnailCache = new PersistentContentCache("com.digabit.documobile.thumbnailCache");
+		thumbnailCache.cacheResourceLoadFailures = true;
+		thumbnailCache.maxCachedFiles = 200;
+		thumbnailCache.maxCacheEntries = 40;
+	}
+	
+	/**
+	 * Constructor.
+	 */
+	public function CustomItemRendererBase()
+	{
+		super();
+		iconContentLoader = thumbnailCache;
+	}
+	
+	...
+	
+}
+
+```
+
+Now your custom item renderer will utilize a disk based content cache which persists across invocations of the application. In this example it also
+will cache resource load failures which can improve performance and reduce network traffic when the content is not found.
+
 License
 =======
 
