@@ -22,7 +22,7 @@ public class CustomItemRendererBase extends IconItemRenderer
 	 */
 	public static var thumbnailCache:PersistentContentCache;
 	{
-		thumbnailCache = new PersistentContentCache("com.digabit.documobile.thumbnailCache");
+		thumbnailCache = new PersistentContentCache("com.digabit.thumbnailCache");
 		thumbnailCache.cacheResourceLoadFailures = true;
 		thumbnailCache.maxCachedFiles = 200;
 		thumbnailCache.maxCacheEntries = 40;
